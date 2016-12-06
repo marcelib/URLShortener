@@ -1,0 +1,13 @@
+body {
+    background-color: #fafdff;
+    font-family: segoe UI light, monospace;
+}
+
+.main {
+    text-align: center;
+}
+
+.base-link {
+    font-size: xx-large;
+    color: dimgrey;
+}
