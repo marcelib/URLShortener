@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>URLShortener</title>
-    <link rel="stylesheet" href="../static/main.css">
-    <link rel='shortcut icon' type='image/x-icon' href='../static/favicon.ico'/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 <div class="main">
     <h1>Marceli Baczewski- URLShortener</h1>
     <form action="" method="post">
         <input name="url" id="url" type="url" placeholder="Insert url to shorten"/>
-        <input type="submit" value="Skróć"/>
+        <input type="submit" value="Shorten"/>
         <div>
-            <a class="base-link" href="login">{{ logged_in }}</a>
+            <a class="base-link" href="{{ url_for('login') }}">{{ logged_in }}</a>
         </div>
         <div>
-            <a class="base-link" href="link">Shortened links</a>
+            <a class="base-link" href="{{ url_for('link') }}">Shortened links</a>
         </div>
     </form>
 </div>

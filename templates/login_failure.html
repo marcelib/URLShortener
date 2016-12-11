@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <title>URLShortener</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="../static/main.css">
-    <link rel='shortcut icon' type='image/x-icon' href='../static/favicon.ico'/>
+    <title>URLShortener</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 <div class="main">
     <p>Invalid login or password</p>
-    <a>Click here to return to main page.</a>
+    <p>Click
+        <a class="base-link" href="{{ url_for('index') }}">here</a>
+        to return to main page.</p>
 </div>
 </body>
 </html>

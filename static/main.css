@@ -8,6 +8,7 @@ body {
 }
 
 .base-link {
-    font-size: xx-large;
+    font-size: large;
     color: dimgrey;
+    margin: 20px;
 }

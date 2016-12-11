@@ -1,30 +1,21 @@
 from flask import Flask, render_template, request, redirect, session
 from uuid import uuid4
-import os
 
 app_url = '/baczewm1/urlshortener'
-app = Flask(__name__, static_url_path='/baczewm1/short/static', static_folder='static')
+app = Flask(__name__, static_url_path='/baczewm1/urlshortener/static', static_folder='static')
 app.secret_key = '!@#dfr23[[]@#%$SDFSasdgg?:"{'
 linkbase = {}
-usernames_and_passwords = []
-
-
-@app.route(app_url + '/static/<resource>')
-def static_resource(resource):
-    path = app.root_path + '/static/' + resource
-    if os.path.isfile(path):
-        return open(path)
-    return render_template('404.html'), 404
+usernames_and_passwords = {'admin': 'admin123', 'abc': 'abc'}
 
 
 @app.route(app_url + '/', methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
-        logged_in = "Log in"
+        print "dupa"
         if 'username' in session:
             logged_in = "Log out from user " + session['username']
-            return render_template('index_logged.html', logged_in=logged_in,)
-        return render_template('index.html', log_in=logged_in, register="Register")
+            return render_template('index_logged.html', logged_in=logged_in, )
+        return render_template('index.html')
     if request.method == 'POST':
         url = request.form['url']
         uuid = uuid4().__str__()
@@ -50,8 +41,6 @@ def register():
     if request.method == 'GET':
         if 'username' in session:
             return render_template('index_logged.html', linkbase=linkbase)
-        else:
-            return render_template('register_form.html')
     if request.method == 'POST':
         if not user_match(request.form.get('username'), request.form.get('password')):
             user_register()
@@ -64,23 +53,25 @@ def login():
         if 'username' in session:
             del session['username']
             return redirect(app_url)
-        return render_template('login_form.html')
+        return render_template('index.html')
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
         if user_match(username, password):
             session['username'] = username
+            print "dupa2"
             return redirect(app_url)
-        return render_template('login_failure.html', username=username)
+        print "dupa3"
+        return render_template('login_failure.html')
 
 
 def user_match(username, password):
-    return any(d["username"] == username and d["password"] == password for d in usernames_and_passwords)
+    return username in usernames_and_passwords and usernames_and_passwords[username] == password
 
 
 def user_register():
-    usernames_and_passwords.append(
-        {'username': request.form.get('username'), 'password': request.form.get('password')})
+    usernames_and_passwords.update(
+        {request.form.get('username'): request.form.get('password')})
 
 
 if __name__ == '__main__':

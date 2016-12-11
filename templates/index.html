@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>URLShortener</title>
-    <link rel="stylesheet" href="../static/main.css">
-    <link rel='shortcut icon' type='image/x-icon' href='../static/favicon.ico'/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 <div class="main">
     <h1>Marceli Baczewski- URLShortener</h1>
-        <div>
-            <form class="form" method="post" action="/login">
-                <input title="Username" type="text" name="username">
-                <input title="Password" type="password" name="password">
-                <input type="submit" value="Login">
-            </form>
-            <form class="form" method='POST' action="/register">
-                <input type='text' name='username' placeholder='Username'/>
-                <input type='password' name='password' placeholder='Password'/>
-                <input type='submit' value='Register'/>
-            </form>
-        </div>
+    <div>
+        <form class="form" method="post" action="{{ url_for('login') }}">
+            <input title="Username" type="text" name="username">
+            <input title="Password" type="password" name="password">
+            <input type="submit" value="Login">
+        </form>
+        <form class="form" method='POST' action="{{ url_for('register') }}">
+            <input type='text' name='username' placeholder='Username'/>
+            <input type='password' name='password' placeholder='Password'/>
+            <input type='submit' value='Register'/>
+        </form>
+    </div>
 </div>
 </body>
 </html>

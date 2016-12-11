@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>URLShortener</title>
-    <link rel="stylesheet" href="../static/main.css">
-    <link rel='shortcut icon' type='image/x-icon' href='../static/favicon.ico'/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 <div class="main">
     <p>Your shortened link: <a class="base-link"  href="{{ shortUrl }}">{{ shortUrl }}</a></p>
     <div>
-        <a class="base-link" href="http://127.0.0.1:5000/">Powrót</a>
+        <a class="base-link" href="{{ url_for('index') }}">Back</a>
     </div>
 </div>
 </body>
