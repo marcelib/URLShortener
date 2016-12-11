@@ -12,3 +12,9 @@ body {
     color: dimgrey;
     margin: 20px;
 }
+
+.base-form {
+    text-align: center;
+    margin: 0 auto 100px;
+    width: 200px;
+}
