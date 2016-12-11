@@ -1,29 +1,30 @@
 from flask import Flask, render_template, request, redirect, session
-from flask import send_from_directory
 from uuid import uuid4
 import os
 
-app_url = 'http://127.0.0.1:5000/'
-app = Flask(__name__)
-app.secret_key = '!@#qr123q11@>?:"{'
+app_url = '/baczewm1/urlshortener'
+app = Flask(__name__, static_url_path='/baczewm1/short/static', static_folder='static')
+app.secret_key = '!@#dfr23[[]@#%$SDFSasdgg?:"{'
 linkbase = {}
 usernames_and_passwords = []
 
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+@app.route(app_url + '/static/<resource>')
+def static_resource(resource):
+    path = app.root_path + '/static/' + resource
+    if os.path.isfile(path):
+        return open(path)
+    return render_template('404.html'), 404
 
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route(app_url + '/', methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
         logged_in = "Log in"
         if 'username' in session:
-            logged_in = "Log out from user" + session['username']
+            logged_in = "Log out from user " + session['username']
             return render_template('index_logged.html', logged_in=logged_in,)
-        return render_template('index.html', logged_in=logged_in, register="Register")
+        return render_template('index.html', log_in=logged_in, register="Register")
     if request.method == 'POST':
         url = request.form['url']
         uuid = uuid4().__str__()
@@ -32,20 +33,19 @@ def index():
         return render_template('link_created.html', shortUrl=short_url)
 
 
-@app.route('/<url>')
+@app.route(app_url + '/<url>')
 def redirect_url(url):
-    print url
     return redirect(linkbase[url], 301)
 
 
-@app.route('/link')
+@app.route(app_url + '/link')
 def link():
     if 'username' in session:
         return render_template('links.html', linkbase=linkbase)
     return redirect(app_url)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route(app_url + '/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         if 'username' in session:
@@ -58,7 +58,7 @@ def register():
         return redirect(app_url)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route(app_url + '/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         if 'username' in session:
